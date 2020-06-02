@@ -88,7 +88,8 @@ if(ENABLE_UBLAS OR BUILD_TESTING)
 endif()
 
 if (ENABLE_CUDA)
-   find_package(CUDA REQUIRED)
+    enable_language(CUDA)
+    find_package(CUDAToolkit REQUIRED)
    set(CUDA_ARCH_FLAG "-arch=sm_20" CACHE STRING "Use one out of sm_13, sm_20, sm_30, ...")
    set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS}" "${CUDA_ARCH_FLAG}" "-DVIENNACL_WITH_CUDA")
 endif(ENABLE_CUDA)
@@ -140,7 +141,7 @@ endif()
 if (ENABLE_OPENCL)
   include_directories(
    "${PROJECT_SOURCE_DIR}"
-   ${OPENCL_INCLUDE_DIRS})
+   ${OpenCL_INCLUDE_DIRS})
 else (ENABLE_OPENCL)
   include_directories("${PROJECT_SOURCE_DIR}")
 endif(ENABLE_OPENCL)
@@ -159,8 +160,8 @@ endif()
 # Export
 ########
 
-configure_file(cmake/FindOpenCL.cmake
-   "${PROJECT_BINARY_DIR}/FindOpenCL.cmake" COPYONLY)
+#configure_file(cmake/FindOpenCL.cmake
+#   "${PROJECT_BINARY_DIR}/FindOpenCL.cmake" COPYONLY)
 
 configure_file(cmake/ViennaCLConfig.cmake.in
    "${PROJECT_BINARY_DIR}/ViennaCLConfig.cmake" @ONLY)
